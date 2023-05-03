@@ -6,13 +6,12 @@ let result = 0;
 const operators = ['add', 'subtract' , 'multiply' , 'divide'];
 
 
-// add eventlisteners to numbers
+/****** Assign event listeners *******/
 for(let i = 0 ; i <= 9; i++){
     let numberElement =  document.querySelector(`#num${i}`);
     numberElement.addEventListener('click', handleNumberClick);
 }
 
-// add event listers to operators
 operators.forEach(operator => {
     let operatorElement =  document.querySelector(`#${operator}`);
     operatorElement.addEventListener('click',handleOperatorClick);
@@ -23,8 +22,14 @@ evaluateElement.addEventListener('click', handleEvalClick);
 
 const displayElement = document.querySelector('#display');
 
+const dotElement = document.querySelector('#decimal');
+dotElement.addEventListener('click', handleDotClick);
 
-/******Functions *******/
+const clearElement = document.querySelector('#clear');
+clearElement.addEventListener('click', handleClearClick);
+
+
+/****** Functions *******/
 function operate(num1,num2,operator){
     switch(operator){
         case '+':
@@ -61,6 +66,22 @@ function handleEvalClick(){
     secondOperand = '';
 }
 
+function handleDotClick(){{
+    if(!firstOperandEntered){
+        firstOperand  += (this.textContent);
+    }else{
+        secondOperand += (this.textContent);
+    }
+}}
+
+function handleClearClick(){
+    firstOperandEntered = false;
+    firstOperand = '';
+    secondOperand = '';
+    operator = '';
+    result = 0;
+    displayElement.textContent  = 0;
+}
 
 
 
