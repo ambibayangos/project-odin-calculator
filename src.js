@@ -5,6 +5,7 @@ let operator = '';
 let result = 0;
 const operators = ['add', 'subtract' , 'multiply' , 'divide'];
 
+// need to handle when two operator are pressed in succession
 
 /****** Assign event listeners *******/
 for(let i = 0 ; i <= 9; i++){
@@ -18,7 +19,7 @@ operators.forEach(operator => {
 });
 
 const evaluateElement = document.querySelector('#evaluate');
-evaluateElement.addEventListener('click', handleEvalClick);
+evaluateElement.addEventListener('click', evaluateExpression);
 
 const displayElement = document.querySelector('#display');
 
@@ -55,9 +56,12 @@ function handleNumberClick(){
 function handleOperatorClick(){
     operator = this.textContent;
     firstOperandEntered = true;
+    if(firstOperandEntered && secondOperand !== ''){
+        evaluateExpression();
+    }
 }
 
-function handleEvalClick(){
+function evaluateExpression(){
     console.log(`1st:${+firstOperand} , 2nd:${+secondOperand} , oper:${operator}`);
     result = operate(+firstOperand,+secondOperand,operator);
     console.log(result);
