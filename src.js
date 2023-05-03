@@ -3,9 +3,11 @@ let firstOperand = '';
 let secondOperand = '';
 let operator = '';
 let result = 0;
+let dotExist = false;
 const operators = ['add', 'subtract' , 'multiply' , 'divide'];
 
 // need to handle when two operator are pressed in succession
+
 
 /****** Assign event listeners *******/
 for(let i = 0 ; i <= 9; i++){
@@ -59,6 +61,7 @@ function handleOperatorClick(){
     if(firstOperandEntered && secondOperand !== ''){
         evaluateExpression();
     }
+    dotExist = false;
 }
 
 function evaluateExpression(){
@@ -70,13 +73,16 @@ function evaluateExpression(){
     secondOperand = '';
 }
 
-function handleDotClick(){{
+function handleDotClick(){
+    if(dotExist) return;
+
     if(!firstOperandEntered){
         firstOperand  += (this.textContent);
     }else{
         secondOperand += (this.textContent);
     }
-}}
+    dotExist = true;
+}
 
 function handleClearClick(){
     firstOperandEntered = false;
