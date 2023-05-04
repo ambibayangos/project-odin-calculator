@@ -7,6 +7,7 @@ let dotExist = false;
 const operators = ['add', 'subtract' , 'multiply' , 'divide'];
 
 // need to handle when two operator are pressed in succession
+// need to handle division by zero
 
 
 /****** Assign event listeners *******/
@@ -52,20 +53,22 @@ function handleNumberClick(){
     }else{
         secondOperand += (this.textContent);
     }
-    console.log(`1st:${firstOperand} , 2nd:${secondOperand}`);
 }
 
 function handleOperatorClick(){
-    operator = this.textContent;
-    firstOperandEntered = true;
+
     if(firstOperandEntered && secondOperand !== ''){
         evaluateExpression();
+        secondOperand = '';
     }
+
+    operator = this.textContent;
+    firstOperandEntered = true;
     dotExist = false;
 }
 
 function evaluateExpression(){
-    console.log(`1st:${+firstOperand} , 2nd:${+secondOperand} , oper:${operator}`);
+    console.log(`${+firstOperand}${operator}${+secondOperand}`);
     result = operate(+firstOperand,+secondOperand,operator);
     console.log(result);
     displayElement.textContent = result;
