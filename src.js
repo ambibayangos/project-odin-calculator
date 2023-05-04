@@ -32,6 +32,9 @@ dotElement.addEventListener('click', handleDotClick);
 const clearElement = document.querySelector('#clear');
 clearElement.addEventListener('click', handleClearClick);
 
+const backSpaceElement = document.querySelector('#backscpace');
+backSpaceElement.addEventListener('click', handleBackSpaceClick);
+
 
 /****** Functions *******/
 function operate(num1,num2,operator){
@@ -43,6 +46,10 @@ function operate(num1,num2,operator){
         case '*':
             return num1*num2;
         case '/':
+            if(num2 === 0){
+                handleDivisionByZero();
+                return Infinity;
+            }
             return num1/num2;
     }
 }
@@ -53,6 +60,7 @@ function handleNumberClick(){
     }else{
         secondOperand += (this.textContent);
     }
+    console.log(`1st:${firstOperand},2nd:${secondOperand}`);
 }
 
 function handleOperatorClick(){
@@ -70,6 +78,7 @@ function handleOperatorClick(){
 function evaluateExpression(){
     console.log(`${+firstOperand}${operator}${+secondOperand}`);
     result = operate(+firstOperand,+secondOperand,operator);
+    if(result === Infinity) return;
     console.log(result);
     displayElement.textContent = result;
     firstOperand = result;
@@ -93,79 +102,24 @@ function handleClearClick(){
     secondOperand = '';
     operator = '';
     result = 0;
+    dotExist = false;
     displayElement.textContent  = 0;
 }
 
-
-
-
-// operate(1,2,'+');
-// operate(1,2,'-');
-// operate(1,2,'*');
-// operate(1,2,'/');
-
-
-// what functionality arewe after here?
-// adhere to the BEDMAS
-/*
-
-(1+3)/3*3
- 
-1+1*1*1
-1+3/3*3/3*3/3
-
-1+(3/3)*(3/3)*(3/3)
-1+1*1*1
-
-
-
-1.) Split with subtractions
-2.) Split with additions
-3.) Split with multiplication
-4.) Split with division
-5.) Split with brackets
-
-
-1+3/3*3/3*3/3
-
-1,3/3*3/3*3/3
-
--,3/3,3/3,3/3
-
--,
-
-
---------------
-
-(1+3)/(3*3/3*3/3)
-
-
-
-if I could find a way to evaluate the bracketed
-expressions and then insert the evaluated expresion
-back to its place then we the algorithm going backwards
-from BEDMAS might work.
-
-Another issue which I am not sure to resolve is
-what if there are next bracket expersions?
-
-
-
-
-*/
-
-/*
-let exp = '(3+3+3)/(234)';
-let reg =/(\(.*?\))/gm;
-let match = reg.exec(exp);
-
-while(match){
-    console.log(match[1]);
-    match = reg.exec(exp)
+function handleDivisionByZero(){
+    firstOperandEntered = false;
+    firstOperand = '';
+    secondOperand = '';
+    operator = '';
+    result = 0;
+    dotExist = false;
+    displayElement.textContent  = 'smh...';
 }
-*/
 
-
-// if we dont include the bracket and the operations are sequetial how can I do it?
-// 1+3-3/3*4 = 
-// 
+function handleBackSpaceClick(){
+    if(!firstOperandEntered){
+        firstOperand = firstOperand.slice(0,firstOperand.length - 1);
+    }else{
+        secondOperand = secondOperand.slice(0,secondOperand.length - 1);
+    }
+}
